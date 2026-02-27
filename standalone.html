@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Harmony Flow - Discover Your Sound</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: #fff;
+      background: #000;
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
+      height: 100vh;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-areas: "sidebar main" "player player";
+      grid-template-columns: 280px 1fr;
+      grid-template-rows: 1fr auto;
+      height: 100vh;
+      background: #000;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .layout::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, #ff0080 0%, #7928ca 20%, #0070f3 40%, #00d4ff 60%, #7928ca 80%, #ff0080 100%);
+      background-size: 400% 400%;
+      animation: liquidFlow 15s ease-in-out infinite;
+      opacity: 0.35;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    @keyframes liquidFlow {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .sidebar {
+      grid-area: sidebar;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(20px);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 1;
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .logo {
+      margin-bottom: 24px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 16px;
+      color: #b3b3b3;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-radius: 8px;
+      transition: color 0.2s;
+    }
+
+    .sidebar-link:hover {
+      color: #fff;
+    }
+
+    .main-content {
+      grid-area: main;
+      background: rgba(18, 18, 18, 0.7);
+      overflow-y: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(26, 26, 26, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .categories {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .category-button {
+      padding: 8px 16px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.07);
+      border: none;
+      color: #fff;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .category-button:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .category-button.active {
+      background: #1ed760;
+      color: #000;
+    }
+
+    .content-wrapper {
+      padding: 24px;
+    }
+
+    .recent-section {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .compact-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+      position: relative;
+    }
+
+    .compact-card:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .compact-cover {
+      width: 64px;
+      height: 64px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .compact-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .section {
+      margin-bottom: 32px;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 0 16px 0;
+    }
+
+    .horizontal-scroll {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scrollbar-width: none;
+    }
+
+    .horizontal-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .large-card {
+      min-width: 240px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .large-card:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .large-card-image {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+    }
+
+    .large-card-info {
+      padding: 16px;
+    }
+
+    .large-card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0 0 4px 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .large-card-artist {
+      font-size: 0.875rem;
+      color: #b3b3b3;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .player {
+      grid-area: player;
+      background: #181818;
+      border-top: 1px solid #282828;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      height: 90px;
+      z-index: 100;
+    }
+
+    .track-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .cover {
+      width: 56px;
+      height: 56px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #282828;
+    }
+
+    .details {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .title {
+      font-weight: 600;
+      margin: 0 0 4px 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .artist {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .control-button {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.95);
+      color: rgba(147, 51, 234, 1);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .control-button:hover {
+      transform: scale(1.05);
+      background: #fff;
+    }
+
+    .control-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .icon-sm {
+      width: 20px;
+      height: 20px;
+    }
+
+    #youtube-player {
+      position: absolute;
+      left: -9999px;
+      width: 640px;
+      height: 360px;
+    }
+
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-areas: "main" "player";
+        grid-template-columns: 1fr;
+      }
+      
+      .sidebar {
+        display: none;
+      }
+      
+      .recent-section {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">Harmony Flow</div>
+      <a href="#" class="sidebar-link">
+        <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        <span>Home</span>
+      </a>
+      <a href="#" class="sidebar-link">
+        <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+        <span>Search</span>
+      </a>
+      <a href="#" class="sidebar-link">
+        <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+        <span>Admin</span>
+      </a>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="top-bar">
+        <div class="user-avatar">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </div>
+        <div class="categories">
+          <button class="category-button active">All</button>
+          <button class="category-button">Wrapped</button>
+          <button class="category-button">Music</button>
+          <button class="category-button">Podcasts</button>
+        </div>
+      </div>
+
+      <div class="content-wrapper">
+        <!-- Recent Plays -->
+        <div class="recent-section" id="recent-section"></div>
+
+        <!-- Pre-save upcoming releases -->
+        <div class="section">
+          <h2 class="section-title">Pre-save upcoming releases</h2>
+          <div class="horizontal-scroll" id="featured-section"></div>
+        </div>
+
+        <!-- Jump back in -->
+        <div class="section">
+          <h2 class="section-title">Jump back in</h2>
+          <div class="horizontal-scroll" id="jumpback-section"></div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Mini Player -->
+    <div class="player">
+      <div class="track-info">
+        <div class="cover" id="player-cover" style="background: rgba(147, 51, 234, 1);"></div>
+        <div class="details">
+          <h4 class="title" id="player-title">No track playing</h4>
+          <p class="artist" id="player-artist">Select a song to start</p>
+        </div>
+      </div>
+      <div class="controls">
+        <button class="control-button" id="play-button" disabled>
+          <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden YouTube Player -->
+  <div id="youtube-player"></div>
+
+  <script>
+    // Mock data
+    const mockTracks = [
+      {
+        id: "1",
+        title: "Midnight Dreams",
+        artist: "Luna Eclipse",
+        album: "Nocturnal Vibes",
+        genre: "Electronic",
+        duration: 245,
+        coverUrl: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=400&h=400&fit=crop",
+        youtubeVideoId: "jfKfPfyJRdk",
+        featured: true
+      },
+      {
+        id: "2",
+        title: "Summer Breeze",
+        artist: "The Coastal Crew",
+        album: "Endless Horizon",
+        genre: "Indie",
+        duration: 198,
+        coverUrl: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=400&fit=crop",
+        youtubeVideoId: "2vjPBrBU-TM",
+        featured: true
+      },
+      {
+        id: "3",
+        title: "Urban Rhythm",
+        artist: "Metro Beats",
+        album: "City Lights",
+        genre: "Hip Hop",
+        duration: 212,
+        coverUrl: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=400&h=400&fit=crop",
+        youtubeVideoId: "L_jWHffIx5E",
+        featured: true
+      },
+      {
+        id: "4",
+        title: "Velvet Nights",
+        artist: "Smooth Operators",
+        album: "Late Night Sessions",
+        genre: "Jazz",
+        duration: 267,
+        coverUrl: "https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=400&h=400&fit=crop",
+        youtubeVideoId: "vmDDOFXSgAs"
+      },
+      {
+        id: "5",
+        title: "Electric Storm",
+        artist: "Voltage",
+        album: "High Energy",
+        genre: "Rock",
+        duration: 223,
+        coverUrl: "https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?w=400&h=400&fit=crop",
+        youtubeVideoId: "eVTXPUF4Oz4"
+      },
+      {
+        id: "6",
+        title: "Moonlight Sonata",
+        artist: "Classical Ensemble",
+        album: "Timeless Classics",
+        genre: "Classical",
+        duration: 334,
+        coverUrl: "https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=400&h=400&fit=crop",
+        youtubeVideoId: "4Tr0otuiQuU"
+      },
+      {
+        id: "7",
+        title: "Heartbeat",
+        artist: "Pop Stars",
+        album: "Chart Toppers",
+        genre: "Pop",
+        duration: 189,
+        coverUrl: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400&h=400&fit=crop",
+        youtubeVideoId: "kJQP7kiw5Fk",
+        featured: true
+      },
+      {
+        id: "8",
+        title: "Country Roads",
+        artist: "Nashville Nights",
+        album: "Southern Stories",
+        genre: "Country",
+        duration: 201,
+        coverUrl: "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=400&h=400&fit=crop",
+        youtubeVideoId: "1vrEljMfXYo"
+      },
+      {
+        id: "9",
+        title: "Soulful Serenade",
+        artist: "R&B Collective",
+        album: "Smooth Grooves",
+        genre: "R&B",
+        duration: 256,
+        coverUrl: "https://images.unsplash.com/photo-1487180144351-b8472da7d491?w=400&h=400&fit=crop",
+        youtubeVideoId: "450p7goxZqg"
+      },
+      {
+        id: "10",
+        title: "Neon Pulse",
+        artist: "Synth Wave",
+        album: "Digital Dreams",
+        genre: "Electronic",
+        duration: 278,
+        coverUrl: "https://images.unsplash.com/photo-1571330735066-03aaa9429d89?w=400&h=400&fit=crop",
+        youtubeVideoId: "SDTZ7iX4vTQ",
+        featured: true
+      }
+    ];
+
+    // State
+    let currentTrack = null;
+    let isPlaying = false;
+    let player = null;
+    let playerReady = false;
+
+    // YouTube API
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    window.onYouTubeIframeAPIReady = function() {
+      console.log('YouTube API ready');
+      player = new YT.Player('youtube-player', {
+        height: '360',
+        width: '640',
+        playerVars: {
+          autoplay: 1,
+          controls: 0,
+          disablekb: 1,
+          fs: 0,
+          modestbranding: 1,
+          playsinline: 1,
+          rel: 0,
+          mute: 1,
+          origin: window.location.origin
+        },
+        events: {
+          onReady: function(event) {
+            console.log('Player ready');
+            playerReady = true;
+            event.target.unMute();
+            event.target.setVolume(100);
+          },
+          onStateChange: function(event) {
+            console.log('Player state:', event.data);
+            if (event.data === YT.PlayerState.ENDED) {
+              console.log('Video ended');
+            }
+          },
+          onError: function(event) {
+            console.error('Player error:', event.data);
+            setTimeout(() => {
+              if (currentTrack) {
+                console.log('Retrying playback...');
+                playTrack(currentTrack);
+              }
+            }, 3000);
+          }
+        }
+      });
+    };
+
+    function playTrack(track) {
+      try {
+        console.log('Playing:', track.title, 'VideoID:', track.youtubeVideoId);
+        currentTrack = track;
+        isPlaying = true;
+        
+        // Update UI
+        const coverEl = document.getElementById('player-cover');
+        const titleEl = document.getElementById('player-title');
+        const artistEl = document.getElementById('player-artist');
+        const playButton = document.getElementById('play-button');
+        
+        if (track.coverUrl) {
+          coverEl.style.backgroundImage = `url(${track.coverUrl})`;
+          coverEl.style.backgroundSize = 'cover';
+          coverEl.style.backgroundPosition = 'center';
+        }
+        titleEl.textContent = track.title;
+        artistEl.textContent = track.artist;
+        playButton.disabled = false;
+        playButton.innerHTML = '<svg class="icon" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
+        
+        // Play YouTube video
+        if (track.youtubeVideoId && playerReady && player) {
+          console.log('Loading video:', track.youtubeVideoId);
+          player.loadVideoById({
+            videoId: track.youtubeVideoId,
+            startSeconds: 0
+          });
+          
+          // Ensure unmuted and playing
+          setTimeout(() => {
+            try {
+              player.unMute();
+              player.setVolume(100);
+              if (player.getPlayerState() !== YT.PlayerState.PLAYING) {
+                player.playVideo();
+              }
+            } catch (e) {
+              console.error('Error ensuring playback:', e);
+            }
+          }, 100);
+        }
+      } catch (error) {
+        console.error('Playback error:', error);
+        alert('Failed to play track. Reloading page...');
+        window.location.reload();
+      }
+    }
+
+    function togglePlayPause() {
+      if (!currentTrack || !player || !playerReady) return;
+      
+      try {
+        if (isPlaying) {
+          player.pauseVideo();
+          isPlaying = false;
+          document.getElementById('play-button').innerHTML = '<svg class="icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
+        } else {
+          player.unMute();
+          player.setVolume(100);
+          player.playVideo();
+          isPlaying = true;
+          document.getElementById('play-button').innerHTML = '<svg class="icon" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
+        }
+      } catch (error) {
+        console.error('Toggle error:', error);
+      }
+    }
+
+    // Event listeners
+    document.getElementById('play-button').addEventListener('click', togglePlayPause);
+
+    // Render sections
+    function renderSections() {
+      const recentSection = document.getElementById('recent-section');
+      const featuredSection = document.getElementById('featured-section');
+      const jumpbackSection = document.getElementById('jumpback-section');
+      
+      // Recent
+      const recent = mockTracks.slice(0, 2);
+      recentSection.innerHTML = recent.map(track => `
+        <div class="compact-card" onclick='playTrack(${JSON.stringify(track)})'>
+          <img src="${track.coverUrl}" alt="${track.title}" class="compact-cover">
+          <div style="flex: 1; min-width: 0;">
+            <h3 class="compact-title">${track.title}</h3>
+          </div>
+        </div>
+      `).join('');
+      
+      // Featured
+      const featured = mockTracks.filter(t => t.featured);
+      featuredSection.innerHTML = featured.map(track => `
+        <div class="large-card" onclick='playTrack(${JSON.stringify(track)})'>
+          <img src="${track.coverUrl}" alt="${track.title}" class="large-card-image">
+          <div class="large-card-info">
+            <h3 class="large-card-title">${track.title}</h3>
+            <p class="large-card-artist">${track.artist}</p>
+          </div>
+        </div>
+      `).join('');
+      
+      // Jump back in
+      const jumpback = mockTracks.slice(0, 3);
+      jumpbackSection.innerHTML = jumpback.map(track => `
+        <div class="large-card" onclick='playTrack(${JSON.stringify(track)})'>
+          <img src="${track.coverUrl}" alt="${track.title}" class="large-card-image">
+          <div class="large-card-info">
+            <h3 class="large-card-title">${track.title}</h3>
+            <p class="large-card-artist">${track.artist}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    renderSections();
+  </script>
+</body>
+</html>

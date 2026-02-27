@@ -1,0 +1,52 @@
+* {
+  box-sizing: border-box;
+  /* Samsung A14 5G optimizations */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+/* Hardware acceleration for smooth animations on Samsung devices */
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+}
+
+html {
+  font: var(--font-body);
+  color: var(--color-neutral-11);
+  background-color: var(--color-neutral-1);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Samsung A14 5G screen optimization - 1080x2408 resolution */
+  text-rendering: optimizeLegibility;
+}
+
+
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  max-height: -webkit-fill-available;
+  position: fixed;
+  overflow: hidden;
+  /* Optimize touch scrolling for Samsung devices */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
