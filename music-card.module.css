@@ -1,0 +1,344 @@
+.card {
+  background: #181818;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: background-color 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--space-3);
+  cursor: pointer;
+}
+
+.card:hover {
+  background: #282828;
+}
+
+.coverContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #282828;
+  cursor: pointer;
+  border-radius: 8px;
+  margin-bottom: var(--space-3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.playOverlay {
+  display: none;
+}
+
+.playButton {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-round);
+  background: #1db954;
+  color: #000;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
+  position: absolute;
+  bottom: var(--space-4);
+  right: var(--space-4);
+  opacity: 0;
+  transform: translateY(8px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.card:hover .playButton {
+  opacity: 1;
+  transform: translateY(-8px);
+}
+
+.playButton:hover {
+  background: #1ed760;
+  transform: translateY(-8px) scale(1.05);
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.trackInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.title {
+  font: var(--font-subheading);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.artist {
+  font: var(--font-body);
+  font-size: 0.875rem;
+  color: #b3b3b3;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.meta {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.genre {
+  font: var(--font-caption);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.75rem;
+}
+
+.duration {
+  font: var(--font-caption);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.75rem;
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.card:hover .actions {
+  opacity: 1;
+}
+
+.queueButton {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-2);
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.queueButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.menuContainer {
+  position: relative;
+}
+
+.menuButton {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-2);
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  position: relative;
+  z-index: 1;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.menuButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.menuButton:active,
+.menuButton[data-active="true"] {
+  background: rgba(30, 215, 96, 0.2);
+  color: #1db954;
+}
+
+.dropdown {
+  position: fixed;
+  background: rgba(40, 40, 40, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-3);
+  padding: var(--space-2);
+  min-width: 180px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7), 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  animation: fadeIn 0.15s ease;
+  backdrop-filter: blur(10px);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdownItem {
+  width: 100%;
+  padding: var(--space-3) var(--space-3);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: var(--radius-2);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  font: var(--font-body);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.dropdownItem:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.dropdownItem:active {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .dropdown {
+    min-width: 200px;
+    padding: var(--space-3);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.8), 0 4px 16px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  
+  .dropdownItem {
+    padding: var(--space-4) var(--space-4);
+    font-size: 1rem;
+    min-height: 48px;
+  }
+  
+  .menuButton,
+  .queueButton {
+    width: 36px;
+    height: 36px;
+    opacity: 1 !important; /* Always show on mobile */
+  }
+  
+  .actions {
+    opacity: 1; /* Always show actions on mobile */
+  }
+}
+
+/* Compact Card Variant */
+.compactCard {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.compactCard:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.compactCover {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-2);
+  object-fit: cover;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.compactInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.compactTitle {
+  font: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.compactPlayButton {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-round);
+  background: #1db954;
+  color: #000;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
+  flex-shrink: 0;
+  opacity: 0;
+  transform: scale(0.9);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.compactCard:hover .compactPlayButton {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.compactPlayButton:hover {
+  background: #1ed760;
+  transform: scale(1.05);
+}

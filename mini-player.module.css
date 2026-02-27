@@ -1,0 +1,1053 @@
+.queueBar {
+  position: fixed;
+  bottom: 90px;
+  left: 0;
+  right: 0;
+  background: rgba(24, 24, 24, 0.98);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  z-index: 99;
+  max-height: 200px;
+  overflow: hidden;
+  animation: slideUpBar 0.3s var(--ease-out);
+}
+
+.queueBarContent {
+  padding: var(--space-4);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.queueBarHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.queueBarTitle {
+  font: var(--font-caption);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.queueBarList {
+  display: flex;
+  gap: var(--space-3);
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  padding-bottom: var(--space-2);
+}
+
+.queueBarList::-webkit-scrollbar {
+  height: 6px;
+}
+
+.queueBarList::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.queueBarList::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-round);
+}
+
+.queueBarList::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.queueBarItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-3);
+  padding: var(--space-2) var(--space-3);
+  min-width: 250px;
+  transition: all 0.2s var(--ease-out);
+  cursor: pointer;
+}
+
+.queueBarItem:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.queueBarCover {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-2);
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
+}
+
+.queueBarInfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.queueBarTrackTitle {
+  font: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.queueBarTrackArtist {
+  font: var(--font-caption);
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.queueBarMore {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-3);
+  padding: var(--space-4);
+  min-width: 100px;
+  font: var(--font-body);
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.5);
+  flex-shrink: 0;
+}
+
+.player {
+  grid-area: player;
+  background: #181818;
+  border-top: 1px solid #282828;
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  height: 90px;
+  z-index: 100;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.player::before {
+  display: none;
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes slideUpBar {
+  0% {
+    transform: translateY(120%);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(-8px);
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.container {
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.trackInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex: 1;
+  min-width: 0;
+}
+
+.cover {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-3);
+  object-fit: cover;
+  background: var(--color-neutral-3);
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.4),
+    0 0 12px rgba(255, 255, 255, 0.1);
+  transition: all 0.3s var(--ease-out);
+  animation: fadeInScale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+}
+
+.cover:hover {
+  transform: scale(1.05);
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.details {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  font: var(--font-subheading);
+  color: #fff;
+  margin: 0 0 var(--space-1) 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  animation: fadeInRight 0.6s var(--ease-out) 0.3s both;
+}
+
+@keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.artist {
+  font: var(--font-body);
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  animation: fadeInRight 0.6s var(--ease-out) 0.4s both;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.controlButton {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-round);
+  background: rgba(255, 255, 255, 0.95);
+  color: rgba(147, 51, 234, 1);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(255, 255, 255, 0.2);
+  animation: fadeInScale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s both;
+}
+
+.controlButton:hover {
+  transform: scale(1.1);
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(255, 255, 255, 0.3);
+  background: #fff;
+}
+
+.controlButton:active {
+  transform: scale(0.95);
+}
+
+.controlButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.controlButton:disabled:hover {
+  transform: none;
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.expandButton {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-3);
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: fadeInScale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.6s both;
+}
+
+.expandButton:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);
+}
+
+.iconButton {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-3);
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: fadeInScale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.6s both;
+}
+
+.iconButton:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.iconButton.active {
+  background: rgba(255, 255, 255, 0.95);
+  color: rgba(147, 51, 234, 1);
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.3);
+}
+
+
+
+/* Expanded Player */
+.expandedPlayer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  backdrop-filter: blur(60px) saturate(180%);
+  animation: slideUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+  background-size: 300% 300%;
+}
+
+.expandedPlayer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: inherit;
+  filter: blur(80px);
+  opacity: 0.6;
+  z-index: -1;
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.expandedContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-6);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.collapseButton {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-round);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  margin-bottom: var(--space-6);
+}
+
+.collapseButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.expandedContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-7);
+}
+
+.coverArtContainer {
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 1;
+  border-radius: var(--radius-4);
+  overflow: hidden;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.7),
+    0 0 60px rgba(147, 51, 234, 0.4),
+    0 0 120px rgba(236, 72, 153, 0.3);
+  animation: floatCover 6s ease-in-out infinite, pulseGlow 4s ease-in-out infinite;
+  position: relative;
+}
+
+.coverArtContainer::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, 
+    rgba(147, 51, 234, 0.5),
+    rgba(236, 72, 153, 0.5),
+    rgba(59, 130, 246, 0.5)
+  );
+  border-radius: var(--radius-4);
+  z-index: -1;
+  animation: rotateGradient 8s linear infinite;
+  filter: blur(20px);
+}
+
+@keyframes rotateGradient {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 
+      0 20px 60px rgba(0, 0, 0, 0.7),
+      0 0 60px rgba(147, 51, 234, 0.4),
+      0 0 120px rgba(236, 72, 153, 0.3);
+  }
+  50% {
+    box-shadow: 
+      0 25px 80px rgba(0, 0, 0, 0.8),
+      0 0 100px rgba(147, 51, 234, 0.6),
+      0 0 180px rgba(236, 72, 153, 0.5);
+  }
+}
+
+@keyframes floatCover {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-10px) scale(1.02);
+  }
+}
+
+.expandedCover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.expandedTrackInfo {
+  text-align: center;
+  width: 100%;
+}
+
+.expandedTitle {
+  font: var(--font-display);
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  color: #fff;
+  margin: 0 0 var(--space-3) 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.expandedArtist {
+  font: var(--font-heading);
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0 0 var(--space-2) 0;
+}
+
+.expandedAlbum {
+  font: var(--font-body);
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+}
+
+.progressSection {
+  width: 100%;
+  margin-bottom: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.progressBar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-round);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: var(--space-3);
+  transition: height 0.2s var(--ease-out);
+}
+
+.progressBar:hover {
+  height: 8px;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, rgba(147, 51, 234, 0.9), rgba(236, 72, 153, 0.9));
+  border-radius: var(--radius-round);
+  transition: width 0.1s linear;
+  position: relative;
+}
+
+.progressFill::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border-radius: var(--radius-round);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transition: opacity 0.2s var(--ease-out);
+}
+
+.progressBar:hover .progressFill::after {
+  opacity: 1;
+}
+
+.timeInfo {
+  display: flex;
+  justify-content: space-between;
+  font: var(--font-caption);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.toggleControls {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-5);
+  padding-top: var(--space-2);
+}
+
+.toggleButton {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.5);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s var(--ease-out);
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+}
+
+.toggleButton::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.4), rgba(236, 72, 153, 0.4));
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-out);
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+}
+
+.toggleButton:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.9);
+  transform: scale(1.05);
+}
+
+.toggleButton.active {
+  color: #fff;
+  box-shadow: 0 0 20px rgba(147, 51, 234, 0.5), 0 0 40px rgba(236, 72, 153, 0.3);
+}
+
+.toggleButton.active::before {
+  opacity: 1;
+}
+
+.toggleButton svg {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.toggleButton span {
+  display: none;
+}
+
+.queueBadge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.9), rgba(147, 51, 234, 0.9));
+  color: #fff;
+  font-size: 0.625rem;
+  font-weight: 700;
+  padding: 2px 4px;
+  border-radius: var(--radius-round);
+  min-width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  z-index: 2;
+}
+
+.currentTime,
+.totalTime {
+  font-size: 0.875rem;
+}
+
+.expandedControls {
+  width: 100%;
+}
+
+.secondaryControls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
+.secondaryButton {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-round);
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.6);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+}
+
+.secondaryButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.secondaryButton.active {
+  background: rgba(147, 51, 234, 0.3);
+  color: #fff;
+  box-shadow: 0 0 20px rgba(147, 51, 234, 0.5);
+}
+
+.mainControlButton {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-round);
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+}
+
+.mainControlButton:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
+.mainControlButton:active {
+  transform: scale(0.95);
+}
+
+.playButton {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-round);
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.9), rgba(236, 72, 153, 0.9));
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  box-shadow: 
+    0 8px 24px rgba(147, 51, 234, 0.5),
+    0 0 40px rgba(236, 72, 153, 0.3);
+}
+
+.playButton:hover {
+  transform: scale(1.05);
+  box-shadow: 
+    0 12px 32px rgba(147, 51, 234, 0.6),
+    0 0 60px rgba(236, 72, 153, 0.4);
+}
+
+.playButton:active {
+  transform: scale(0.95);
+}
+
+.queueContainer {
+  width: 100%;
+  max-height: 300px;
+  margin-top: var(--space-6);
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-4);
+  padding: var(--space-5);
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.queueHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.queueTitle {
+  font: var(--font-heading);
+  color: #fff;
+  margin: 0;
+}
+
+.clearButton {
+  background: rgba(236, 72, 153, 0.3);
+  color: rgba(255, 255, 255, 0.8);
+  border: none;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-3);
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  font: var(--font-caption);
+}
+
+.clearButton:hover {
+  background: rgba(236, 72, 153, 0.5);
+  color: #fff;
+}
+
+.emptyQueue {
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  padding: var(--space-6) 0;
+  font: var(--font-body);
+}
+
+.queueList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.queueItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-3);
+  transition: all 0.2s var(--ease-out);
+}
+
+.queueItem:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.queueCover {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-2);
+  object-fit: cover;
+  background: var(--color-neutral-3);
+}
+
+.queueTrackInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.queueTrackTitle {
+  font: var(--font-body);
+  color: #fff;
+  margin: 0 0 var(--space-1) 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.queueTrackArtist {
+  font: var(--font-caption);
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.removeButton {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-round);
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.6);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  flex-shrink: 0;
+}
+
+.removeButton:hover {
+  background: rgba(236, 72, 153, 0.3);
+  color: #fff;
+}
+
+.settingsContainer {
+  width: 100%;
+  max-height: 400px;
+  margin-top: var(--space-6);
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-4);
+  padding: var(--space-5);
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.settingsHeader {
+  margin-bottom: var(--space-4);
+}
+
+.settingsTitle {
+  font: var(--font-heading);
+  color: #fff;
+  margin: 0;
+  font-size: 1.125rem;
+}
+
+.qualityOptions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.qualityButton {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-3);
+  padding: var(--space-4);
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  text-align: left;
+}
+
+.qualityButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(147, 51, 234, 0.4);
+  transform: translateX(4px);
+}
+
+.qualityButton.activeQuality {
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.2), rgba(236, 72, 153, 0.2));
+  border-color: rgba(147, 51, 234, 0.6);
+  box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+}
+
+.qualityInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.qualityLabel {
+  font: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.qualityDesc {
+  font: var(--font-caption);
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.settingNote {
+  margin-top: var(--space-4);
+  padding: var(--space-3);
+  background: rgba(147, 51, 234, 0.1);
+  border-left: 3px solid rgba(147, 51, 234, 0.5);
+  border-radius: var(--radius-2);
+  font: var(--font-caption);
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .queueBar {
+    bottom: 84px;
+    max-height: 150px;
+  }
+  
+  .queueBarContent {
+    padding: var(--space-3);
+  }
+  
+  .queueBarItem {
+    min-width: 200px;
+  }
+  
+  .queueBarCover {
+    width: 36px;
+    height: 36px;
+  }
+
+  .player {
+    padding: var(--space-3) var(--space-4);
+    height: 84px;
+  }
+
+  .container {
+    gap: var(--space-4);
+  }
+
+  .cover {
+    width: 48px;
+    height: 48px;
+  }
+
+  .trackInfo {
+    gap: var(--space-3);
+  }
+
+  .controlButton {
+    width: 40px;
+    height: 40px;
+  }
+
+  .expandedContainer {
+    padding: var(--space-4);
+  }
+
+  .coverArtContainer {
+    max-width: 300px;
+  }
+
+  .toggleControls {
+    gap: var(--space-4);
+  }
+
+  .toggleButton {
+    width: 42px;
+    height: 48px;
+  }
+
+  .toggleButton svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .secondaryControls {
+    gap: var(--space-3);
+  }
+
+  .secondaryButton {
+    width: 40px;
+    height: 40px;
+  }
+
+  .mainControlButton {
+    width: 48px;
+    height: 48px;
+  }
+
+  .playButton {
+    width: 64px;
+    height: 64px;
+  }
+
+  .queueContainer {
+    max-height: 200px;
+  }
+
+  .iconButton {
+    width: 36px;
+    height: 36px;
+  }
+}
